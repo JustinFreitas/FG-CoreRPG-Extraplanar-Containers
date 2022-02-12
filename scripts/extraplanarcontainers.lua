@@ -47,7 +47,7 @@ end
 --	returns true if either is a match
 function isAnyContainer(sItemName)
 	if sItemName and sItemName ~= '' then
-		local sItemName = string.lower(sItemName)
+		sItemName = string.lower(sItemName)
 		return isContainer(sItemName, tExtraplanarContainers) or isContainer(sItemName, tContainers)
 	end
 end
@@ -105,7 +105,7 @@ function measure_contents(node_pc, table_containers_mundane, table_containers_ex
 			local number_item_count = DB.getValue(node_item, 'count', 0);
 			local number_item_weight = DB.getValue(node_item, 'weight', 0);
 			local string_item_location = string.lower(DB.getValue(node_item, 'location', ''))
-			
+
 			local bIsInExtraplanar = isContainer(string_item_location, tExtraplanarContainers)
 			local bIsInContainer = isContainer(string_item_location, tContainers)
 
@@ -203,7 +203,7 @@ function coinWeight_2e(nodeChar)
 		if DataCommonADND and DataCommonADND.coreVersion == "2e" then
 			CharManager.updateMoveFromEncumbrance2e(nodeChar);
 		else
-			CharManager.updateMoveFromEncumbrance1e(nodeChar); 
+			CharManager.updateMoveFromEncumbrance1e(nodeChar);
 		end
 	else
 		DB.setValue(nodeChar, "speed.basemodenc", "number", 0);
