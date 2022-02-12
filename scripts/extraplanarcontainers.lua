@@ -54,7 +54,7 @@ end
 
 --	looks through provided charsheet for inventory items that are containers
 --	if found, these are added to table_containers_extraplanar or table_containers_mundane as appropriate
-local function build_containers(node_pc)
+function build_containers(node_pc)
 	local table_containers_mundane = {}
 	local table_containers_extraplanar = {}
 	for _,node_item in pairs(DB.getChildren(node_pc, 'inventorylist')) do
@@ -97,7 +97,7 @@ end
 --	items in extraplanar containers will only have weight added to container subtotal
 --	items in mundane containers will have weight added to subtotal and encumbrance total
 --	items in neither will have weight added to encumbrance total
-local function measure_contents(node_pc, table_containers_mundane, table_containers_extraplanar)
+function measure_contents(node_pc, table_containers_mundane, table_containers_extraplanar)
 	local number_total_weight = 0
 	for _,node_item in pairs(DB.getChildren(node_pc, 'inventorylist')) do
 		local state_item_carried = DB.getValue(node_item, 'carried', 0)
@@ -147,7 +147,7 @@ end
 
 --	writes container subtotals to the relevant container
 --	sends chat messages if containers are overfull
-local function write_contents_to_containers(node_pc, table_containers, string_error)
+function write_contents_to_containers(node_pc, table_containers, string_error)
 	local rActor = ActorManager.resolveActor(node_pc)
 	for _,table_container in pairs(table_containers) do
 		DB.setValue(table_container['nodeItem'], 'extraplanarcontents', 'number', table_container['nTotalWeight'])
@@ -186,7 +186,7 @@ local function write_contents_to_containers(node_pc, table_containers, string_er
 	end
 end
 
-local function coinWeight_2e(nodeChar)
+function coinWeight_2e(nodeChar)
 	local nCoinWeight = 0;
 	if not CoinsWeight and OptionsManager.getOption("OPTIONAL_ENCUMBRANCE_COIN") == "on" then
 		nCoinWeight = nCoinWeight + DB.getValue(nodeChar, "coins.slot1.amount", 0);
@@ -213,7 +213,7 @@ local function coinWeight_2e(nodeChar)
 	return nCoinWeight
 end
 
-local function updateEncumbrance_new(node_char)
+function updateEncumbrance_new(node_char)
 	-- assemble a list of containers and their capacities
 	local table_containers_mundane, table_containers_extraplanar = build_containers(node_char)
 
@@ -235,15 +235,15 @@ local function updateEncumbrance_new(node_char)
 end
 
 -- called when items have their locations changed
-local function onLocationChanged(node)
+function onLocationChanged(node)
 	local node_char = node.getChild('....')
 	updateEncumbrance_new(node_char)
 end
 
 -- called when items have their dimensions changed
-local function onDimensionsChanged(node)
+function onDimensionsChanged(node)
 	local node_char = node.getChild('....')
-	updateEncumbrance_new.updateEncumbrance(node_char)
+	updateEncumbrance_new(node_char)
 end
 
 function onInit()
