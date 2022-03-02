@@ -256,7 +256,9 @@ function onInit()
 	})
 
 	if UtilityManager.isClientFGU() then
-		CharEncumbranceManager.updateEncumbrance = updateEncumbrance_new
+		-- TODO: On ruleset update, uncomment.
+		--CharEncumbranceManager.updateEncumbrance = updateEncumbrance_new
+		CharManager.updateEncumbrance = updateEncumbrance_new
 	else
 	    CharManager.updateEncumbrance = updateEncumbrance_new
 	end
