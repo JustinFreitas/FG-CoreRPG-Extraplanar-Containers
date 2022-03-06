@@ -2,6 +2,8 @@
 --	Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
+ENCUMBRANCE_LOAD = "encumbrance.load";
+
 --	search terms for finding extraplanar containers
 --	these containers will have their subtotals calculated
 --	the weight of their contents will not be counted elsewhere
@@ -224,14 +226,19 @@ function updateEncumbrance_new(node_char)
 	write_contents_to_containers(node_char, table_containers_mundane, "item_overfull")
 	write_contents_to_containers(node_char, table_containers_extraplanar, "item_self_destruct")
 
+	if UtilityManager.isClientFGU() then
+		number_total = number_total + CharEncumbranceManager.calcDefaultCurrencyEncumbrance(node_char);
+		CharEncumbranceManager.setDefaultEncumbranceValue(node_char, number_total);
+	end
+
 	-- ADND Coin Weight Compatibility
-	if DataCommonADND then
+	if DataCommonADND and not UtilityManager.isClientFGU() then
 		number_total = number_total + coinWeight_2e(node_char)
 	end
 
 	-- rounds total and writes to encumbrance field
 	local number_rounded_total = number_total + 0.5 - (number_total + 0.5) % 1
-	DB.setValue(node_char, 'encumbrance.load', 'number', number_rounded_total)
+	DB.setValue(node_char, ENCUMBRANCE_LOAD, 'number', number_rounded_total)
 end
 
 -- called when items have their locations changed
@@ -256,9 +263,8 @@ function onInit()
 	})
 
 	if UtilityManager.isClientFGU() then
-		-- TODO: On ruleset update, uncomment.
-		--CharEncumbranceManager.updateEncumbrance = updateEncumbrance_new
-		CharManager.updateEncumbrance = updateEncumbrance_new
+		ENCUMBRANCE_LOAD = CharEncumbranceManager.getEncumbranceField();
+		CharEncumbranceManager.updateEncumbrance = updateEncumbrance_new
 	else
 	    CharManager.updateEncumbrance = updateEncumbrance_new
 	end
