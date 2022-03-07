@@ -8,6 +8,7 @@ ENCUMBRANCE_LOAD = "encumbrance.load";
 --	these containers will have their subtotals calculated
 --	the weight of their contents will not be counted elsewhere
 tExtraplanarContainers = {
+	'knapsack of halflingkind',
 	'quiver of ehlonna',
 	'efficient quiver',
 	'handy haversack',
