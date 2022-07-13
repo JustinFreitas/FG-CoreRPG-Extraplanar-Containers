@@ -221,7 +221,7 @@ end
 
 local function isClientFGU()
     local nMajor = Interface.getVersion()
-    return nMajor < 4
+    return nMajor >= 4
 end
 
 function updateEncumbrance_new(node_char)
