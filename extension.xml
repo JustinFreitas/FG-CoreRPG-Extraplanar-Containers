@@ -10,7 +10,7 @@
 		<description>This extension provides support for extraplanar containers by ignoring the weight of carried (but not equipped) items in supported containers ('of holding', 'portable hole', 'handy haversack', 'efficient quiver'.</description>
 	</properties>
 
-	<announcement text="Extraplanar Containers v1.7.2 FGC/FGU, 7/12/22\rbmos with FGC fork by Justin Freitas" font="emotefont" icon="bag_icon"/>
+	<announcement text="Extraplanar Containers v1.7.2 FGC/FGU\rbmos and Justin Freitas (FGC), 7/12/22" font="emotefont" icon="bag_icon"/>
 
 	<base>
 		<!-- Records -->
