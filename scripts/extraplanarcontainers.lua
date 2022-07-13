@@ -16,6 +16,9 @@ tExtraplanarContainers = {
 	'extraplanar',
 	'weightless',
 	'of holding',
+	'campsite',
+	'room at inn',
+	'dinosaur',
 	'donkey',
 	'horse',
 	'mule'
@@ -216,6 +219,11 @@ function coinWeight_2e(nodeChar)
 	return nCoinWeight
 end
 
+local function isClientFGU()
+    local nMajor = Interface.getVersion()
+    return nMajor < 4
+end
+
 function updateEncumbrance_new(node_char)
 	-- assemble a list of containers and their capacities
 	local table_containers_mundane, table_containers_extraplanar = build_containers(node_char)
@@ -227,13 +235,13 @@ function updateEncumbrance_new(node_char)
 	write_contents_to_containers(node_char, table_containers_mundane, "item_overfull")
 	write_contents_to_containers(node_char, table_containers_extraplanar, "item_self_destruct")
 
-	if UtilityManager.isClientFGU() then
+	if isClientFGU() then
 		number_total = number_total + CharEncumbranceManager.calcDefaultCurrencyEncumbrance(node_char);
 		CharEncumbranceManager.setDefaultEncumbranceValue(node_char, number_total);
 	end
 
 	-- ADND Coin Weight Compatibility
-	if DataCommonADND and not UtilityManager.isClientFGU() then
+	if DataCommonADND and not isClientFGU() then
 		number_total = number_total + coinWeight_2e(node_char)
 	end
 
@@ -263,7 +271,7 @@ function onInit()
 		default = 'off',
 	})
 
-	if UtilityManager.isClientFGU() then
+	if isClientFGU() then
 		ENCUMBRANCE_LOAD = CharEncumbranceManager.getEncumbranceField();
 		CharEncumbranceManager.updateEncumbrance = updateEncumbrance_new
 	else
