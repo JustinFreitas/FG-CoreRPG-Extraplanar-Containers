@@ -1,0 +1,12 @@
+{
+  "name": "fg-corerpg-extraplanar-containers",
+  "version": "1.12.0",
+  "description": "Unit tests for Fantasy Grounds Extraplanar Containers extension",
+  "main": "test/run_tests.js",
+  "scripts": {
+    "test": "node test/run_tests.js"
+  },
+  "dependencies": {
+    "wasmoon": "^1.16.0"
+  }
+}
